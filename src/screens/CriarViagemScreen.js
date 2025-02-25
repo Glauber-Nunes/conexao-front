@@ -8,6 +8,28 @@ export default function CriarViagemScreen({ navigation }) {
   const [horario, setHorario] = useState("");
   const [preco, setPreco] = useState("");
 
+  const handleCreateTrip = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        if (!token) {
+          Alert.alert("Erro", "Você precisa estar logado para cadastrar uma viagem.");
+          return;
+        }
+
+        const response = await api.post(
+          "/api/viagens",
+          { origem, destino, horario, preco, formaPagamento, carro },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        Alert.alert("Sucesso", "Viagem cadastrada com sucesso!");
+        navigation.navigate("Home");
+      } catch (error) {
+        console.error("Erro ao cadastrar viagem:", error.response?.data || error.message);
+        Alert.alert("Erro", "Falha ao cadastrar viagem.");
+      }
+    };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Criar Nova Viagem</Text>

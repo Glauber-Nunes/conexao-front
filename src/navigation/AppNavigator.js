@@ -6,7 +6,7 @@ import CriarViagemScreen from "../screens/CriarViagemScreen"; // Adicione isso
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen"
-
+import TripDetailsScreen from "../screens/TripDetailsScreen"
 
 const Stack = createStackNavigator();
 
@@ -19,6 +19,7 @@ export default function AppNavigator() {
         <Stack.Screen name="CriarViagem" component={CriarViagemScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} options={{ title: "Criar Conta" }} />
 
+        <Stack.Screen name="DetalhesViagem" component={TripDetailsScreen} options={{ title: "DetalhesViagem" }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

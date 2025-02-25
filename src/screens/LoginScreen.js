@@ -13,19 +13,22 @@ export default function LoginScreen() {
   const handleLogin = async () => {
     try {
       const response = await api.post("/auth/login", { email, senha });
-      const token = response.data.token;
-      const tipoUsuario = response.data.tipoUsuario; // "PASSAGEIRO" ou "MOTORISTA"
+      console.log("Resposta da API:", response.data);
 
-      // Armazena o token e o tipo de usuário no AsyncStorage
+      // 🔹 Agora o backend retorna um JSON com { token, tipoUsuario }
+      const { token, tipoUsuario } = response.data;
+
+      if (!token) {
+        throw new Error("Token não recebido!");
+      }
+
       await AsyncStorage.setItem("token", token);
-      await AsyncStorage.setItem("tipoUsuario", tipoUsuario);
-
-      setAuthToken(token); // Configura o token no Axios
-
+      await AsyncStorage.setItem("tipoUsuario", tipoUsuario); // 🔹 Salvando também o tipo de usuário
+      console.log("Token salvo com sucesso!");
       navigation.navigate("Home");
     } catch (error) {
-      console.error("Erro ao fazer login:", error.response?.data || error.message);
-      alert("Erro ao fazer login. Verifique suas credenciais.");
+      console.error("Erro ao fazer login:", error.message || error.response?.data);
+      Alert.alert("Erro", "Falha no login. Verifique suas credenciais.");
     }
   };
 
