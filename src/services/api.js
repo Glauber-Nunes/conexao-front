@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://192.168.3.4:8080/conexao/api"; // Substitua pelo IP correto do backend
+const API_URL = "http://192.168.3.4:8080/conexao"; // Substitua pelo IP correto do backend
 
 export const api = axios.create({
   baseURL: API_URL,
